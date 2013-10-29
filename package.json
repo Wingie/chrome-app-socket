@@ -1,0 +1,39 @@
+{
+  "name": "chrome-socket",
+  "version": "0.1.0",
+  "description": "Chrome App Sockets (TCP/UDP) made easy!",
+  "main": "index.js",
+  "devDependencies": {
+    "tape": "*",
+    "portfinder": "~0.2.1"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feross/chrome-socket.git"
+  },
+  "keywords": [
+    "chrome app",
+    "chrome.socket",
+    "socket api",
+    "tcp",
+    "udp",
+    "wrapper",
+    "client",
+    "server"
+  ],
+  "author": "Feross Aboukhadijeh <feross@feross.org> (http://feross.org/)",
+  "contributors": [
+    "John Hiesey <john@hiesey.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/feross/chrome-socket/issues"
+  },
+  "homepage": "https://github.com/feross/chrome-socket",
+  "dependencies": {
+    "bops": "~0.1.0"
+  }
+}
