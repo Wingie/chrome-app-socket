@@ -1,5 +1,5 @@
 {
-  "name": "chrome-socket",
+  "name": "chrome-app-socket",
   "version": "0.1.0",
   "description": "Chrome App Sockets (TCP/UDP) made easy!",
   "main": "index.js",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/feross/chrome-socket.git"
+    "url": "git://github.com/feross/chrome-app-socket.git"
   },
   "keywords": [
     "chrome app",
@@ -30,9 +30,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/feross/chrome-socket/issues"
+    "url": "https://github.com/feross/chrome-app-socket/issues"
   },
-  "homepage": "https://github.com/feross/chrome-socket",
+  "homepage": "https://github.com/feross/chrome-app-socket",
   "dependencies": {
     "bops": "~0.1.0"
   }
