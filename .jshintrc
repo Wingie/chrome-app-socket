@@ -1,9 +1,10 @@
 {
   "asi": true,
-  "laxbreak": true,
-  "expr": true,
-  "strict": false,
-  "node": true,
   "browser": true,
-  "devel": true
+  "devel": true,
+  "expr": true,
+  "laxbreak": true,
+  "node": true,
+  "strict": false,
+  "unused": "vars"
 }

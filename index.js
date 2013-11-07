@@ -1,3 +1,9 @@
+/* global chrome */
+
+// TODO: add comments to this file
+// TODO: separate UDP sender from UDP listener so i can send without
+//       listening on a port
+
 exports.UDPSocket = UDPSocket
 exports.TCPSocket = TCPSocket
 exports.TCPListenSocket = TCPListenSocket
@@ -10,18 +16,19 @@ function toBuffer (data) {
   if (typeof data === 'string') {
     data = bops.from(data)
   } else if (bops.is(data)) {
-    // If data is an TypedArrayView (Uint8Array) then copy the buffer, so the
+    // If data is a TypedArrayView (Uint8Array) then copy the buffer, so the
     // underlying buffer will be exactly the right size. We care about this
-    // because the Chrome `sendTo` function takes an ArrayBuffer.
+    // because the Chrome `sendTo` function will be passed the underlying
+    // ArrayBuffer.
     var newBuf = bops.create(data.length)
     bops.copy(data, newBuf, 0, 0, data.length)
     data = newBuf
   }
 
-  // `socket.sendTo` requires an ArrayBuffer
   if (data.buffer) {
     data = data.buffer
   }
+
   return data
 }
 
@@ -70,13 +77,13 @@ UDPSocket.prototype._onBound = function () {
   self.emit('bound', self.localPort)
   while (self.sendBuffer.length) {
     var message = self.sendBuffer.shift()
-    self.sendTo(message.data, message.host, message.port, message.cb)
+    self.write(message.data, message.host, message.port, message.cb)
   }
 
   self._recvLoop()
 }
 
-UDPSocket.prototype.sendTo = function (data, host, port, cb) {
+UDPSocket.prototype.write = function (data, host, port, cb) {
   var self = this
   cb || (cb = function () {})
 
@@ -101,7 +108,7 @@ UDPSocket.prototype._recvLoop = function() {
   var self = this
 
   chrome.socket.recvFrom(self.id, function (recvFromInfo) {
-    if (recvFromInfo.resultCode == 0) {
+    if (recvFromInfo.resultCode === 0) {
       self.emit('disconnect')
     } else if (recvFromInfo.resultCode < 0) {
       console.warn('UDPSocket ' + self.id + ' recvFrom: ' +
@@ -194,7 +201,7 @@ TCPSocket.prototype._recvLoop = function() {
   var self = this
 
   chrome.socket.read(self.id, function (readInfo) {
-    if (readInfo.resultCode == 0) {
+    if (readInfo.resultCode === 0) {
       self.emit('disconnect')
     } else if (readInfo.resultCode < 0) {
       console.warn('TCPSocket ' + self.id + ' recvFrom: ', readInfo.resultCode)

@@ -4,8 +4,14 @@
   "description": "Chrome App Sockets (TCP/UDP) made easy!",
   "main": "index.js",
   "devDependencies": {
-    "tape": "*",
-    "portfinder": "~0.2.1"
+    "browserify": "~2.35.1",
+    "envify": "~0.2.0",
+    "once": "~1.3.0",
+    "portfinder": "*",
+    "tape": "*"
+  },
+  "dependencies": {
+    "bops": "~0.1.0"
   },
   "scripts": {
     "test": "tape test/*.js"
@@ -32,8 +38,5 @@
   "bugs": {
     "url": "https://github.com/feross/chrome-app-socket/issues"
   },
-  "homepage": "https://github.com/feross/chrome-app-socket",
-  "dependencies": {
-    "bops": "~0.1.0"
-  }
+  "homepage": "https://github.com/feross/chrome-app-socket"
 }
