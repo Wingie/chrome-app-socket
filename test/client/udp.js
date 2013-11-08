@@ -2,7 +2,7 @@ var socket = require('../../')
 
 var PORT = Number(process.env.PORT)
 
-var sock = new socket.UDPSocket()
+var sock = socket.UDPSocket()
 sock.write('beep', '127.0.0.1', PORT)
 
 sock.on('data', function(data, host, port) {
