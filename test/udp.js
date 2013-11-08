@@ -12,7 +12,8 @@ test('UDP local-initiated echo', function (t) {
     var child
 
     socket.on('listening', function () {
-      helper.browserify('udp-client.js', port, function (err) {
+      var env = { PORT: port }
+      helper.browserify('udp.js', env, function (err) {
         if (err) return t.fail(err)
         child = helper.launchBrowser()
       })
