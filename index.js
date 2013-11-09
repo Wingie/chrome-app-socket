@@ -1,6 +1,5 @@
-var udp = require('./lib/udp')
-var tcp = require('./lib/tcp')
+exports.dgram = require('./lib/dgram')
 
-exports.UDPSocket = udp.UDPSocket
+var tcp = require('./lib/tcp')
 exports.TCPSocket = tcp.TCPSocket
 exports.TCPListenSocket = tcp.TCPListenSocket

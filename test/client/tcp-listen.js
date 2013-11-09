@@ -8,8 +8,8 @@ var server = socket.TCPListenSocket(LISTEN_PORT)
 
 server.on('listening', function () {
   // Report to node that the TCP server is listening
-  var readySock = socket.UDPSocket()
-  readySock.write('listening', '127.0.0.1', READY_PORT)
+  var readySock = socket.dgram.createSocket('udp4')
+  readySock.send('listening', 0, 'listening'.length, READY_PORT, '127.0.0.1')
 })
 
 server.on('connection', function (sock) {

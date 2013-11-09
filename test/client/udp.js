@@ -1,15 +1,17 @@
 var bops = require('bops')
-var socket = require('../../')
+var dgram = require('../../').dgram
 
 var PORT = Number(process.env.PORT)
 
-var sock = socket.UDPSocket()
-sock.write('beep', '127.0.0.1', PORT)
+var sock = dgram.createSocket('udp4')
 
-sock.on('data', function (data, host, port) {
+var beep = bops.from('beep')
+sock.send(beep, 0, beep.length, PORT, '127.0.0.1')
+
+sock.on('message', function (data, host, port) {
   if (bops.to(data) === 'boop') {
-    sock.write('pass', '127.0.0.1', PORT)
+    sock.send('pass', 0, 'pass'.length, PORT, '127.0.0.1')
   } else {
-    sock.write('fail', '127.0.0.1', PORT)
+    sock.send('fail', 0, 'fail'.length, PORT, '127.0.0.1')
   }
 })
