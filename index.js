@@ -1,5 +1,2 @@
-exports.dgram = require('./lib/dgram')
-
-var tcp = require('./lib/tcp')
-exports.TCPSocket = tcp.TCPSocket
-exports.TCPListenSocket = tcp.TCPListenSocket
+exports.dgram = require('./lib/dgram') // UDP
+exports.net = require('./lib/net') // TCP

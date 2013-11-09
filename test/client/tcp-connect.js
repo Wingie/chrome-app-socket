@@ -1,15 +1,26 @@
 var bops = require('bops')
-var socket = require('../../')
+var net = require('../../').net
 
 var PORT = Number(process.env.PORT)
 
-var sock = socket.TCPSocket('127.0.0.1', PORT)
-sock.write('beep')
+var client = net.createConnection({
+  port: PORT,
+  host: '127.0.0.1'
+})
 
-sock.on('data', function (data) {
+// If any errors are emitted, send them to the server to cause tests to fail
+client.on('error', function (err) {
+  console.error(err)
+  console.log(err.stack)
+  // client.write(err.message)
+})
+
+client.write('beep')
+
+client.on('data', function (data) {
   if (bops.to(data) === 'boop') {
-    sock.write('pass')
+    client.write('pass')
   } else {
-    sock.write('fail')
+    client.write('fail')
   }
 })

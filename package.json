@@ -4,7 +4,8 @@
   "description": "Chrome App Sockets (TCP/UDP) made easy!",
   "main": "index.js",
   "dependencies": {
-    "bops": "0.x"
+    "bops": "0.x",
+    "core-util-is": "1.x"
   },
   "devDependencies": {
     "browserify": "2.x",
