@@ -15,3 +15,8 @@ sock.on('message', function (data, rInfo) {
     sock.send('fail', 0, 'fail'.length, rInfo.port, rInfo.address)
   }
 })
+
+// If any errors are emitted, send them to the server to cause tests to fail
+sock.on('error', function (err) {
+  sock.send(err.message, 0, err.message.length, PORT, '127.0.0.1')
+})
