@@ -3,18 +3,16 @@ var helper = require('./helper')
 var portfinder = require('portfinder')
 var test = require('tape')
 
-test('UDP local-initiated echo', function (t) {
-  t.plan(2)
-
+test('UDP works (echo test)', function (t) {
   portfinder.getPort(function (err, port) {
-    if (err) return t.fail(err)
+    t.error(err, 'Found free ports')
     var socket = dgram.createSocket('udp4')
     var child
 
     socket.on('listening', function () {
       var env = { PORT: port }
       helper.browserify('udp.js', env, function (err) {
-        if (err) return t.fail(err)
+        t.error(err, 'Clean browserify build')
         child = helper.launchBrowser()
       })
     })
@@ -22,15 +20,16 @@ test('UDP local-initiated echo', function (t) {
     var i = 0
     socket.on('message', function (message, remote) {
       if (i === 0) {
-        t.equal(message.toString(), new Buffer('beep').toString())
-        var response = new Buffer('boop')
-        socket.send(response, 0, response.length, remote.port, remote.address)
+        t.equal(message.toString(), 'beep', 'Got beep')
+        var boop = new Buffer('boop')
+        socket.send(boop, 0, boop.length, remote.port, remote.address)
       } else if (i === 1) {
-        t.equal(message.toString(), new Buffer('done').toString())
+        t.equal(message.toString(), 'pass', 'Boop was received')
         socket.close()
         child.kill()
+        t.end()
       } else {
-        t.fail('UDP server received unexpected message')
+        t.fail('UDP client sent unexpected message')
       }
       i += 1
     })
