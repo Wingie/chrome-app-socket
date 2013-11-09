@@ -8,10 +8,10 @@ var sock = dgram.createSocket('udp4')
 var beep = bops.from('beep')
 sock.send(beep, 0, beep.length, PORT, '127.0.0.1')
 
-sock.on('message', function (data, host, port) {
+sock.on('message', function (data, rInfo) {
   if (bops.to(data) === 'boop') {
-    sock.send('pass', 0, 'pass'.length, PORT, '127.0.0.1')
+    sock.send('pass', 0, 'pass'.length, rInfo.port, rInfo.address)
   } else {
-    sock.send('fail', 0, 'fail'.length, PORT, '127.0.0.1')
+    sock.send('fail', 0, 'fail'.length, rInfo.port, rInfo.address)
   }
 })
