@@ -5,8 +5,14 @@ var PORT = Number(process.env.PORT)
 
 var sock = dgram.createSocket('udp4')
 
-var beep = bops.from('beep')
-sock.send(beep, 0, beep.length, PORT, '127.0.0.1')
+// If any errors are emitted, send them to the server to cause tests to fail
+sock.on('error', function (err) {
+  console.error(err)
+  console.log(err.stack)
+  sock.send(err.message, 0, err.message.length, PORT, '127.0.0.1')
+})
+
+sock.send('beep', 0, 'beep'.length, PORT, '127.0.0.1')
 
 sock.on('message', function (data, rInfo) {
   if (bops.to(data) === 'boop') {
@@ -14,9 +20,4 @@ sock.on('message', function (data, rInfo) {
   } else {
     sock.send('fail', 0, 'fail'.length, rInfo.port, rInfo.address)
   }
-})
-
-// If any errors are emitted, send them to the server to cause tests to fail
-sock.on('error', function (err) {
-  sock.send(err.message, 0, err.message.length, PORT, '127.0.0.1')
 })
